@@ -2,9 +2,32 @@
 
 Pour toutes demandes : [https://github.com/NextDom/plugin-teleinfo/issues](https://github.com/NextDom/plugin-teleinfo/issues)
 
-### 4.2.4 (En cours)
+### 4.4.0 (04-04-2019)
 
-* Bug sur le type de commandes lors de la création automatique. 
+* Détection automatique du type d'abonnement.
+* Détection automatique du compteur depuis la configuration (non disponible pour le modem Cartelectronic 2 compteurs).
+* Déclaration index production.
+* Correction du diagnostique.
+* Maintenance de l'historique des index.
+
+### 4.3.2 (01-04-2019)
+
+* Stat de production.
+* Augmentation du délais du passage des logs normal au démarrage du démon.
+* Changement pour le niveau de log, création du socket oublié pour la prod.
+* Bug sur le calcul de la consommation moyenne.
+
+### 4.3.1 (25-03-2019)
+
+* Corrections pour le modem 2 compteurs.
+
+### 4.3.0 (18-03-2019)
+
+* Modifications pour deport du daemon (@jlayec)
+
+### 4.2.4 (15-03-2019)
+
+* Bug sur le type de commandes lors de la création automatique.
 
 ### 4.2.3 (12-03-2019)
 

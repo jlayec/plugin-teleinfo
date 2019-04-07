@@ -127,7 +127,7 @@ class Teleinfo:
                             content[name] = value;
                         else:
                             logging.error("TELEINFO------ ** FRAME CORRUPTED ! **")
-                            logging.debug('** FRAME : ' + resp + '**')
+                            logging.error('** FRAME : ' + resp + '**')
                             #This frame is corrupted, we need to wait until the next one
                             while '\x02' not in resp:
                                 resp = globals.TELEINFO_SERIAL.readline()
@@ -192,6 +192,7 @@ class Teleinfo:
         while(1):
             raz_calcul = datetime.now() - raz_time
             if raz_calcul.seconds > 60:
+                logging.info("TELEINFO------HEARTBEAT")
                 raz_time = datetime.now()
                 for cle, valeur in data.items():
                     data.pop(cle)
@@ -278,7 +279,7 @@ def read_socket(cycle):
 		time.sleep(cycle)
 
 def log_starting(cycle):
-	time.sleep(30)
+	time.sleep(90)
 	logging.info('GLOBAL------Passage des logs en normal')
 	log = logging.getLogger()
 	for hdlr in log.handlers[:]:

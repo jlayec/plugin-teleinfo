@@ -21,10 +21,10 @@ if (!isConnect('admin')) {
 }
 
 ?>
-<div id='div_OptionsAlert' style=""></div>
+<div id='div_OptionsAlert'></div>
 <div class="input-group pull-right" style="display:inline-flex">
   <span class="pull-right">
-    <a class="btn btn-success pull-right" id="btOptionsSave"><i class="fa fa-check-circle"></i> {{Enregistrer}}</a>
+    <a class="btn btn-success pull-right" id="btOptionsSave"><i class="fas fa-check-circle"></i> {{Enregistrer}}</a>
   </span>
 </div>
 
@@ -45,7 +45,7 @@ if (!isConnect('admin')) {
             			}
               			?>
             			<span class="input-group-btn">
-            				<a class="btn btn-default btn-sm cursor" id="bt_selectoutsideTemp" title="{{Choisir une commande}}"><i class="fa fa-list-alt"></i></a>
+            				<a class="btn btn-default btn-sm cursor" id="bt_selectoutsideTemp" title="{{Choisir une commande}}"><i class="fas fa-list-alt"></i></a>
             			</span>
             		</div>
                 </div>
@@ -88,10 +88,30 @@ if (!isConnect('admin')) {
     </form>
 </div>
 
+<div class="col-lg-12">
+    <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">{{Index Production}} :</label>
+                <div class="col-lg-5">
+                    <div class="input-group">
+                        <?php
+            			$indexProduction = config::byKey('indexProduction', 'teleinfo', 'EAIT');
+                        echo '<input id="indexProduction" type="text" value="'.$indexProduction.'" data-role="tagsinput"/>';
+              			?>
+            		</div>
+                </div>
+                <div class="col-lg-5">
+                </div>
+            </div>
+    </form>
+</div>
+
 
 
 <?php
-include_file('desktop', 'options', 'js', 'teleinfo');
+
 include_file('3rdparty', 'bootstrap-tagsinput/bootstrap-tagsinput', 'js', 'teleinfo');
 include_file('3rdparty', 'bootstrap-tagsinput/bootstrap-tagsinput', 'css', 'teleinfo');
+include_file('desktop', 'options', 'js', 'teleinfo');
+include_file('desktop', 'teleinfo', 'css', 'teleinfo');
 ?>

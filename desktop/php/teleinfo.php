@@ -26,7 +26,7 @@ switch ($controlerState) {
             break;
         }
 		event::add('jeedom::alert', array(
-			'level' => 'danger',
+			'level' => 'warning',
 			'page' => 'teleinfo',
 			'message' => __('Le deamon téléinfo ne semble pas démaré, vérifiez la configuration du port.', __FILE__),
 		));
@@ -37,88 +37,63 @@ switch ($controlerState) {
 ?>
 
 <div class="row row-overflow">
-
-	<div class="col-lg-2 col-md-3 col-sm-4">
-        <div class="bs-sidebar">
-            <ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
-                <a class="btn btn-default eqLogicAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter}}</a>
-                <li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
-                <?php
-                foreach ($eqLogics as $eqLogic) {
-                    echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
-                }
-                ?>
-            </ul>
-        </div>
-    </div>
-
-	<div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-		<legend>{{Gestion}}</legend>
+	<div class="col-xs-12 eqLogicThumbnailDisplay">
+		<legend><i class="fas fa-cog"></i> {{Gestion}}</legend>
 		<div class="eqLogicThumbnailContainer">
-			<div class="cursor" id="bt_info_daemon" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-			  <center>
-				<i class="fa fa-heartbeat" style="font-size : 5em;color:#767676;"></i>
-			  </center>
-			  <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Info Modem}}</center></span>
+			<div class="cursor logoSecondary" id="bt_info_daemon">
+				<i class="fas fa-heartbeat"></i>
+                <br/>
+                <span>{{Info Modem}}</span>
 			</div>
 
-			<div class="cursor eqLogicAction" data-action="gotoPluginConf" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
-				<center>
-					<i class="fa fa-wrench" style="font-size : 5em;color:#767676;"></i>
-				</center>
-			<span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Configuration}}</center></span>
+			<div class="cursor logoSecondary eqLogicAction" data-action="gotoPluginConf">
+			    <i class="fas fa-wrench"></i>
+                <br/>
+                <span>{{Configuration}}</span>
 			</div>
 
-			<div class="cursor" id="bt_options" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-			  <center>
-				<i class="fa fa-list-alt" style="font-size : 5em;color:#767676;"></i>
-			  </center>
-			  <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Options}}</center></span>
-			</div>
-
-
+			<div class="cursor logoSecondary" id="bt_options">
+				<i class="fas fa-list-alt"></i>
+                <br/>
+                <span>{{Options}}</span>
+            </div>
 		</div>
 
         <legend>{{Mes Modules de Téléinformation}}</legend>
-        <?php
-        /*if (count($eqLogics) == 0) {
-            echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Vous n'avez pas encore de module Téléinformation, cliquez sur Ajouter pour commencer}}</span></center>";
-        } else {*/
-            ?>
             <div class="eqLogicThumbnailContainer">
 
-				<div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-					<center>
-						<i class="fa fa-plus-circle" style="font-size : 7em;color:#33b8cc;"></i>
-					</center>
-					<span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#4F81BD"><center>Ajouter</center></span>
+				<div class="eqLogicDisplayCard cursor eqLogicAction logoPrimaryTeleinfo" data-action="add">
+					<i class="fas fa-plus-circle logoPlusEqlogic"></i>
+                    </br>
+					<span class="name">Ajouter</span>
 				</div>
-
                 <?php
-                foreach ($eqLogics as $eqLogic) {
-                	$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
-                	echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="text-align: center; background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
-                	echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="95" />';
-                	echo "<br>";
-                	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;">' . $eqLogic->getHumanName(true, true) . '</span>';
-                	echo '</div>';
-                }
-                ?>
+			    foreach ($eqLogics as $eqLogic) {
+				    $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+				    echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-logical-id="' . $eqLogic->getLogicalId() . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
+    				echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+                    echo '</br>';
+    				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+    				echo '</div>';
+			    }
+			    ?>
             </div>
-        <?php /*}*/ ?>
     </div>
 
 
 
-    <div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
-		<a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
-		<a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
-    <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> Configuration avancée</a>
-
+    <div class="col-xs-12 eqLogic" style="display: none;">
+        <div class="input-group pull-right" style="display:inline-flex">
+			<span class="input-group-btn">
+				<a class="btn btn-default eqLogicAction btn-sm roundedLeft" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}</a>
+                <a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
+                <a class="btn btn-danger btn-sm eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
+			</span>
+		</div>
 		<ul class="nav nav-tabs" role="tablist">
-      <li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
-			<li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> Equipement</a></li>
-			<li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> Commandes</a></li>
+      <li role="presentation"><a href="#" class="eqLogicAction cursor" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
+			<li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipement}}</a></li>
+			<li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Commandes}}</a></li>
 		</ul>
 
 		<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
@@ -173,7 +148,7 @@ switch ($controlerState) {
                               ?>
                           </div>
                       </div>
-                      <div class="form-group">
+                      <div class="form-group etatObjet">
                           <label class="col-lg-4 control-label">{{Etat de l'objet}} :</label>
                           <div class="col-lg-8">
                               <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
@@ -187,49 +162,32 @@ switch ($controlerState) {
               <form class="form-horizontal">
                   <fieldset>
                       <!--<legend>{{Paramètres}}</legend>-->
-                      <div class="form-group">
-                          <label class="col-lg-3 control-label pull-left">{{Votre abonnement :}}</label>
+                      <div class="form-group infoAbonnement">
+                          <label class="col-lg-3 control-label pull-left">{{Votre abonnement }}</label>
                           <div class="col-lg-4">
-                              <select class="eqLogicAttr form-control tooltips" title="{{Abonnement présent sur le compteur}}" data-l1key="configuration" data-l2key="abonnement">
-                                  <option value="">Aucun</option>
-                                  <option value="base">Base (HP)</option>
-                                  <option value="basetri">Base triphasé</option>
-                                  <option value="bleu">Bleu (HP/HC)</option>
-                                  <option value="bleutri">Bleu triphasé</option>
-                                  <option value="tempo">Tempo / EJP</option>
-                                  <option value="tempotri">Tempo triphasé</option>
-                              </select>
+                              <span class="eqLogicAttr" data-l1key="configuration" data-l2key="abonnement" id="typeAbonnement">Aucun</span>
+                          </div>
+                          <div class="col-lg-5">
+                          </div>
+                      </div>
+                      <div class="form-group creationCommandes">
+                          <label class="col-lg-3 control-label pull-left">{{Création des commandes}} <sup><i class="fas fa-question-circle tooltips" title="{{Créer automatiquement les commandes envoyées par le compteur}}"></i></sup></label>
+                          <div class="col-lg-7 tooltips">
+                              <input type="checkbox" id="AutoCreateFromCompteur" class="eqLogicAttr configKey" data-l1key="configuration" data-l2key="AutoCreateFromCompteur"/>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="col-lg-3 control-label pull-left"></label>
+                          <div class="col-lg-4">
+                              <a class="btn btn-info tooltips"  id="btTeleinfoHealth"><i class="fas fa-medkit"></i>{{ Santé}}</a>
+                              <a class="btn btn-warning tooltips"  id="btTeleinfoMaintenance"><i class="fas fa-hospital"></i>{{ Maintenance}}</a>
                           </div>
                           <div class="col-lg-5">
                           </div>
                       </div>
                       <div class="form-group">
-                          <label class="col-lg-3 control-label pull-left">{{Création des commandes}} <sup><i class="fa fa-question-circle tooltips" title="{{Créer automatiquement les commandes envoyées par le compteur}}" style="font-size : 1em;color:grey;"></i></sup></label>
-                          <div class="col-lg-7 tooltips">
-                              <input type="checkbox" id="AutoCreateFromCompteur" class="eqLogicAttr configKey" data-l1key="configuration" data-l2key="AutoCreateFromCompteur"/>
-                              <label for="AutoCreateFromCompteur">  </label>
-                          </div>
-                          <div class="col-lg-2">
-                          </div>
-                          <!--<div class="col-md-2">
-                          <input class="eqLogicAttr" style="display:none" type="checkbox"  data-l1key="configuration" data-l2key="AutoGenerateFields" id="checkbox-autocreate"/>
-                          <a class="btn btn-info btn-sm eqLogicAction tooltips"  id="create_data_teleinfo" title="{{Permet de créer automatiquement les commandes nécessaires.}}" id="createcmd"><i class="fa fa-plus-circle"></i> {{Créer}}</a><br/><br/>
-                          </div>-->
-                      </div>
-                      <div class="form-group">
-                          <label class="col-lg-3 control-label pull-left">{{Vérifier}} <sup><i class="fa fa-question-circle tooltips" title="{{Obtenir des informations sur la réception des données}}" style="font-size : 1em;color:grey;"></i></sup></label>
-                          <div class="col-lg-3">
-                              <a class="btn btn-info tooltips"  id="bt_teleinfoHealth"><i class="fa fa-medkit"></i>{{ Santé}}</a>
-                          </div>
-                          <div class="col-lg-6">
-                          </div>
-                          <!--<div class="col-md-2">
-                          <a class="btn btn-info btn-sm eqLogicAction tooltips"  data-action="save" title="{{Applique le template}}"><i class="fa fa-plus-circle"></i> {{Appliquer}}</a><br/><br/>
-                          </div>-->
-                      </div>
-                      <div class="form-group">
                           <div class="col-lg-12">
-                              <div class="alert alert-info globalRemark" style="">{{Attention, il est nécessaire d'activer l'historisation des index pour utiliser les statistiques}}</div>
+                              <div class="alert alert-info globalRemark">{{Attention, il est nécessaire d'activer l'historisation des index pour utiliser les statistiques}}</div>
                           </div>
                       </div>
                   </fieldset>
@@ -238,18 +196,22 @@ switch ($controlerState) {
       </div>
   </div>
   <div role="tabpanel" class="tab-pane" id="commandtab">
-  </br>
-  <a class="btn btn-success btn-sm cmdAction" id="addDataToTable"><i class="fa fa-plus-circle"></i> {{Ajouter une donnée}}</a> &nbsp;
-  <a class="btn btn-info btn-sm cmdAction expertModeVisible" id="addStatToTable"><i class="fa fa-plus-circle"></i> {{Ajouter une statistique}}</a><br/><br/>
+  <div class="input-group pull-right inputAddCmd" style="display:inline-flex">
+			<span class="input-group-btn">
+                <a class="btn btn-success btn-sm cmdAction roundedLeft" id="addDataToTable"><i class="fas fa-plus-circle"></i> {{Ajouter une donnée}}</a> &nbsp;
+                <a class="btn btn-info btn-sm cmdAction roundedRight" id="addStatToTable"><i class="fas fa-plus-circle"></i> {{Ajouter une statistique}}</a>
+            </span>
+  </div>
+
   <table id="table_cmd" class="table table-bordered table-condensed">
       <thead>
           <tr>
-              <th style="width: 50px;">#</th>
-              <th style="width: 150px;">{{Nom}}</th>
-              <th style="width: 110px;">{{Sous-Type}}</th>
-              <th style="width: 200px;">{{Donnée}}</th>
-              <th style="width: 150px;">{{Paramètres}}</th>
-              <th style="width: 150px;"></th>
+              <th>#</th>
+              <th style="width: 15%">{{Nom}}</th>
+              <th style="width: 15%;">{{Sous-Type}}</th>
+              <th style="width: 30%;">{{Donnée}}</th>
+              <th style="width: 30%;">{{Paramètres}}</th>
+              <th></th>
           </tr>
       </thead>
       <tbody>
@@ -267,5 +229,5 @@ switch ($controlerState) {
 </div>
 
 <?php include_file('desktop', 'teleinfo', 'js', 'teleinfo'); ?>
-<?php include_file('desktop', 'teleinfo', 'css', 'teleinfo'); ?>
 <?php include_file('core', 'plugin.template', 'js'); ?>
+<?php include_file('desktop', 'teleinfo', 'css', 'teleinfo'); ?>
